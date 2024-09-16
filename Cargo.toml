@@ -6,6 +6,11 @@ edition = "2021"
 [lib]
 name = "drillxmobile"
 crate-type = ["cdylib"]
+
+[[bin]]
+name = "uniffi-bindgen"
+path = "uniffi-bindgen.rs"
+
 [dependencies]
 uniffi = "0.28.1"
 [build-dependencies]
