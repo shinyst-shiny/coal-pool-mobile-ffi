@@ -13,7 +13,12 @@ path = "uniffi-bindgen.rs"
 
 [dependencies]
 uniffi = "0.28.1"
+drillx = "2.1.0"
+serde = "1.0.210"
+
 [build-dependencies]
 uniffi = { version = "0.28.1", features = ["build"] }
+
 [dev-dependencies]
 uniffi = { version = "0.28.1", features = ["bindgen-tests"] }
+
