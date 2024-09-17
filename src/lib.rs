@@ -35,7 +35,7 @@ pub fn dx_hash(challenge: Vec<u8>, cutoff: u64, start_nonce: u64, end_nonce: u64
         ) {
             total_hashes += 1;
             let difficulty = hx.difficulty();
-            if difficulty.gt(&7) && difficulty.gt(&best_difficulty) {
+            if difficulty.gt(&best_difficulty) {
                 best_nonce = nonce;
                 best_difficulty = difficulty;
                 best_hash = hx;
@@ -48,9 +48,7 @@ pub fn dx_hash(challenge: Vec<u8>, cutoff: u64, start_nonce: u64, end_nonce: u64
         }
 
         if hash_timer.elapsed().as_secs().ge(&cutoff) {
-            if best_difficulty.ge(&8) {
-                break;
-            }
+            break;
         }
 
         // Increment nonce
