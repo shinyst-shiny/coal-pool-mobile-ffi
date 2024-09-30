@@ -1,4 +1,4 @@
 fn main() {
-    uniffi::generate_scaffolding("./src/drillxmobile.udl").unwrap();
+    uniffi::generate_scaffolding("./src/orehqmobileffi.udl").unwrap();
 }
 

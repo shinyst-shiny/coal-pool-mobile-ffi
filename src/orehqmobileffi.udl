@@ -1,0 +1,26 @@
+[Error]
+enum OreHqMobileFfiError {
+  "InvalidPubkeyStr",
+};
+
+
+namespace orehqmobileffi {
+    DxSolution dx_hash(sequence<u8> challenge, u64 cutoff, u64 start_nonce, u64 end_nonce);
+    GeneratedKey generate_key();
+    [Throws=OreHqMobileFfiError]
+    string get_transfer_lamports_transaction(string latest_blockhash, string from_pubkey_str, string to_pubkey_str, u64 amount);
+};
+
+dictionary DxSolution {
+    sequence<u8> nonce;
+    sequence<u8> digest;
+    u32 nonces_checked;
+    u32 difficulty;
+};
+
+dictionary GeneratedKey {
+    string word_list;
+    bytes keypair;
+};
+
+

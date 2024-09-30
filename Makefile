@@ -1,11 +1,11 @@
 # Define paths and library names
-TARGET_AARCH64 = target/aarch64-linux-android/release/libdrillxmobile.so
-TARGET_ARMV7 = target/armv7-linux-androideabi/release/libdrillxmobile.so
-TARGET_X86 = target/i686-linux-android/release/libdrillxmobile.so
-TARGET_X86_64 = target/x86_64-linux-android/release/libdrillxmobile.so
+TARGET_AARCH64 = target/aarch64-linux-android/release/liborehqmobileffi.so
+TARGET_ARMV7 = target/armv7-linux-androideabi/release/liborehqmobileffi.so
+TARGET_X86 = target/i686-linux-android/release/liborehqmobileffi.so
+TARGET_X86_64 = target/x86_64-linux-android/release/liborehqmobileffi.so
 
 JNI_LIBS_DIR = jniLibs
-LIB_NAME = libuniffi_drillxmobile.so
+LIB_NAME = libuniffi_orehqmobileffi.so
 
 # Default target to run
 all: build copy-libs generate-kotlin
@@ -34,7 +34,7 @@ copy-libs: $(TARGET_AARCH64) $(TARGET_ARMV7) $(TARGET_X86) $(TARGET_X86_64)
 generate-kotlin:
 	cargo run --features=uniffi/cli \
 	    --bin uniffi-bindgen \
-	    generate src/drillxmobile.udl \
+	    generate src/orehqmobileffi.udl \
 	    --language kotlin
 
 # Clean up the jniLibs directory
