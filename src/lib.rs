@@ -1,6 +1,8 @@
 use std::time::Instant;
 
+use bip39::{Mnemonic, Seed};
 use serde::{Serialize, Deserialize};
+use solana_sdk::{derivation_path::DerivationPath, signature::Keypair, signer::SeedDerivable};
 
 uniffi::include_scaffolding!("drillxmobile");
 
@@ -64,3 +66,31 @@ pub fn dx_hash(challenge: Vec<u8>, cutoff: u64, start_nonce: u64, end_nonce: u64
     }
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct DxGeneratedKey {
+    word_list: String,
+    keypair: Vec<u8>,
+}
+ 
+pub fn dx_generate_key() -> DxGeneratedKey {
+    let new_mnemonic = Mnemonic::new(bip39::MnemonicType::Words12, bip39::Language::English);
+    let phrase = new_mnemonic.clone().into_phrase();
+
+    let seed = Seed::new(&new_mnemonic, "");
+
+    let derivation_path = DerivationPath::from_absolute_path_str("m/44'/501'/0'/0'").unwrap();
+
+    if let Ok(new_key) = Keypair::from_seed_and_derivation_path(seed.as_bytes(), Some(derivation_path)) {
+        DxGeneratedKey {
+            word_list: phrase,
+            keypair: new_key.to_bytes().to_vec()
+        }
+    } else {
+
+        DxGeneratedKey {
+            word_list: "failed".to_string(),
+            keypair: vec![0u8]
+
+        }
+    }
+}

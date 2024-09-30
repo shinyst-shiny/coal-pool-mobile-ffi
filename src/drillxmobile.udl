@@ -1,5 +1,6 @@
 namespace drillxmobile {
     DxSolution dx_hash(sequence<u8> challenge, u64 cutoff, u64 start_nonce, u64 end_nonce);
+    DxGeneratedKey dx_generate_key();
 };
 
 dictionary DxSolution {
@@ -7,6 +8,11 @@ dictionary DxSolution {
     sequence<u8> digest;
     u32 nonces_checked;
     u32 difficulty;
+};
+
+dictionary DxGeneratedKey {
+    string word_list;
+    bytes keypair;
 };
 
 
