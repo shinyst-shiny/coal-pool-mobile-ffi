@@ -1,13 +1,13 @@
 [Error]
-enum OreHqMobileFfiError {
+enum CoalPoolMobileFfiError {
   "InvalidPubkeyStr",
 };
 
 
-namespace orehqmobileffi {
+namespace coalpoolmobileffi {
     DxSolution dx_hash(sequence<u8> challenge, u64 cutoff, u64 start_nonce, u64 end_nonce);
     GeneratedKey generate_key();
-    [Throws=OreHqMobileFfiError]
+    [Throws=CoalPoolMobileFfiError]
     string get_transfer_lamports_transaction(string latest_blockhash, string from_pubkey_str, string to_pubkey_str, u64 amount);
 };
 

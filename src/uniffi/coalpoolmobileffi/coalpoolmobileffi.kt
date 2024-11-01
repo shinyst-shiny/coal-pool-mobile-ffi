@@ -3,7 +3,7 @@
 
 @file:Suppress("NAME_SHADOWING")
 
-package uniffi.orehqmobileffi
+package uniffi.coalpoolmobileffi
 
 // Common helper code.
 //
@@ -55,7 +55,7 @@ open class RustBuffer : Structure() {
     companion object {
         internal fun alloc(size: ULong = 0UL) = uniffiRustCall() { status ->
             // Note: need to convert the size to a `Long` value to make this work with JVM.
-            UniffiLib.INSTANCE.ffi_orehqmobileffi_rustbuffer_alloc(size.toLong(), status)
+            UniffiLib.INSTANCE.ffi_coalpoolmobileffi_rustbuffer_alloc(size.toLong(), status)
         }.also {
             if(it.data == null) {
                throw RuntimeException("RustBuffer.alloc() returned null data pointer (size=${size})")
@@ -71,7 +71,7 @@ open class RustBuffer : Structure() {
         }
 
         internal fun free(buf: RustBuffer.ByValue) = uniffiRustCall() { status ->
-            UniffiLib.INSTANCE.ffi_orehqmobileffi_rustbuffer_free(buf, status)
+            UniffiLib.INSTANCE.ffi_coalpoolmobileffi_rustbuffer_free(buf, status)
         }
     }
 
@@ -353,7 +353,7 @@ private fun findLibraryName(componentName: String): String {
     if (libOverride != null) {
         return libOverride
     }
-    return "uniffi_orehqmobileffi"
+    return "uniffi_coalpoolmobileffi"
 }
 
 private inline fun <reified Lib : Library> loadIndirect(
@@ -702,7 +702,7 @@ internal interface UniffiForeignFutureCompleteVoid : com.sun.jna.Callback {
 internal interface UniffiLib : Library {
     companion object {
         internal val INSTANCE: UniffiLib by lazy {
-            loadIndirect<UniffiLib>(componentName = "orehqmobileffi")
+            loadIndirect<UniffiLib>(componentName = "coalpoolmobileffi")
             .also { lib: UniffiLib ->
                 uniffiCheckContractApiVersion(lib)
                 uniffiCheckApiChecksums(lib)
@@ -711,131 +711,131 @@ internal interface UniffiLib : Library {
         
     }
 
-    fun uniffi_orehqmobileffi_fn_func_dx_hash(`challenge`: RustBuffer.ByValue,`cutoff`: Long,`startNonce`: Long,`endNonce`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun uniffi_coalpoolmobileffi_fn_func_dx_hash(`challenge`: RustBuffer.ByValue,`cutoff`: Long,`startNonce`: Long,`endNonce`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun uniffi_orehqmobileffi_fn_func_generate_key(uniffi_out_err: UniffiRustCallStatus, 
+    fun uniffi_coalpoolmobileffi_fn_func_generate_key(uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun uniffi_orehqmobileffi_fn_func_get_transfer_lamports_transaction(`latestBlockhash`: RustBuffer.ByValue,`fromPubkeyStr`: RustBuffer.ByValue,`toPubkeyStr`: RustBuffer.ByValue,`amount`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun uniffi_coalpoolmobileffi_fn_func_get_transfer_lamports_transaction(`latestBlockhash`: RustBuffer.ByValue,`fromPubkeyStr`: RustBuffer.ByValue,`toPubkeyStr`: RustBuffer.ByValue,`amount`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun ffi_orehqmobileffi_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun ffi_orehqmobileffi_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun ffi_orehqmobileffi_rustbuffer_free(`buf`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rustbuffer_free(`buf`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus,
     ): Unit
-    fun ffi_orehqmobileffi_rustbuffer_reserve(`buf`: RustBuffer.ByValue,`additional`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rustbuffer_reserve(`buf`: RustBuffer.ByValue,`additional`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun ffi_orehqmobileffi_rust_future_poll_u8(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_u8(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_u8(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_u8(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_u8(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_u8(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_u8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_u8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Byte
-    fun ffi_orehqmobileffi_rust_future_poll_i8(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_i8(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_i8(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_i8(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_i8(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_i8(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_i8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_i8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Byte
-    fun ffi_orehqmobileffi_rust_future_poll_u16(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_u16(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_u16(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_u16(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_u16(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_u16(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_u16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_u16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Short
-    fun ffi_orehqmobileffi_rust_future_poll_i16(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_i16(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_i16(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_i16(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_i16(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_i16(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_i16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_i16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Short
-    fun ffi_orehqmobileffi_rust_future_poll_u32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_u32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_u32(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_u32(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_u32(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_u32(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_u32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_u32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Int
-    fun ffi_orehqmobileffi_rust_future_poll_i32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_i32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_i32(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_i32(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_i32(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_i32(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_i32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_i32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Int
-    fun ffi_orehqmobileffi_rust_future_poll_u64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_u64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_u64(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_u64(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_u64(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_u64(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_u64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_u64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Long
-    fun ffi_orehqmobileffi_rust_future_poll_i64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_i64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_i64(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_i64(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_i64(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_i64(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_i64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_i64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Long
-    fun ffi_orehqmobileffi_rust_future_poll_f32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_f32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_f32(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_f32(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_f32(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_f32(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_f32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_f32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Float
-    fun ffi_orehqmobileffi_rust_future_poll_f64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_f64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_f64(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_f64(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_f64(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_f64(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_f64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_f64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Double
-    fun ffi_orehqmobileffi_rust_future_poll_pointer(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_pointer(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_pointer(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_pointer(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_pointer(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_pointer(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_pointer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_pointer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Pointer
-    fun ffi_orehqmobileffi_rust_future_poll_rust_buffer(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_rust_buffer(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_rust_buffer(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_rust_buffer(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_rust_buffer(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_rust_buffer(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_rust_buffer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_rust_buffer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
-    fun ffi_orehqmobileffi_rust_future_poll_void(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_poll_void(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_cancel_void(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_cancel_void(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_free_void(`handle`: Long,
+    fun ffi_coalpoolmobileffi_rust_future_free_void(`handle`: Long,
     ): Unit
-    fun ffi_orehqmobileffi_rust_future_complete_void(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
+    fun ffi_coalpoolmobileffi_rust_future_complete_void(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
     ): Unit
-    fun uniffi_orehqmobileffi_checksum_func_dx_hash(
+    fun uniffi_coalpoolmobileffi_checksum_func_dx_hash(
     ): Short
-    fun uniffi_orehqmobileffi_checksum_func_generate_key(
+    fun uniffi_coalpoolmobileffi_checksum_func_generate_key(
     ): Short
-    fun uniffi_orehqmobileffi_checksum_func_get_transfer_lamports_transaction(
+    fun uniffi_coalpoolmobileffi_checksum_func_get_transfer_lamports_transaction(
     ): Short
-    fun ffi_orehqmobileffi_uniffi_contract_version(
+    fun ffi_coalpoolmobileffi_uniffi_contract_version(
     ): Int
     
 }
@@ -844,7 +844,7 @@ private fun uniffiCheckContractApiVersion(lib: UniffiLib) {
     // Get the bindings contract version from our ComponentInterface
     val bindings_contract_version = 26
     // Get the scaffolding contract version by calling the into the dylib
-    val scaffolding_contract_version = lib.ffi_orehqmobileffi_uniffi_contract_version()
+    val scaffolding_contract_version = lib.ffi_coalpoolmobileffi_uniffi_contract_version()
     if (bindings_contract_version != scaffolding_contract_version) {
         throw RuntimeException("UniFFI contract version mismatch: try cleaning and rebuilding your project")
     }
@@ -852,13 +852,13 @@ private fun uniffiCheckContractApiVersion(lib: UniffiLib) {
 
 @Suppress("UNUSED_PARAMETER")
 private fun uniffiCheckApiChecksums(lib: UniffiLib) {
-    if (lib.uniffi_orehqmobileffi_checksum_func_dx_hash() != 18855.toShort()) {
+    if (lib.uniffi_coalpoolmobileffi_checksum_func_dx_hash() != 18855.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_orehqmobileffi_checksum_func_generate_key() != 44818.toShort()) {
+    if (lib.uniffi_coalpoolmobileffi_checksum_func_generate_key() != 44818.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_orehqmobileffi_checksum_func_get_transfer_lamports_transaction() != 2450.toShort()) {
+    if (lib.uniffi_coalpoolmobileffi_checksum_func_get_transfer_lamports_transaction() != 2450.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
 }
@@ -1101,33 +1101,33 @@ public object FfiConverterTypeGeneratedKey: FfiConverterRustBuffer<GeneratedKey>
 
 
 
-sealed class OreHqMobileFfiException(message: String): kotlin.Exception(message) {
+sealed class CoalPoolMobileFfiException(message: String): kotlin.Exception(message) {
         
-        class InvalidPubkeyStr(message: String) : OreHqMobileFfiException(message)
+        class InvalidPubkeyStr(message: String) : CoalPoolMobileFfiException(message)
         
 
-    companion object ErrorHandler : UniffiRustCallStatusErrorHandler<OreHqMobileFfiException> {
-        override fun lift(error_buf: RustBuffer.ByValue): OreHqMobileFfiException = FfiConverterTypeOreHqMobileFfiError.lift(error_buf)
+    companion object ErrorHandler : UniffiRustCallStatusErrorHandler<CoalPoolMobileFfiException> {
+        override fun lift(error_buf: RustBuffer.ByValue): CoalPoolMobileFfiException = FfiConverterTypeCoalPoolMobileFfiError.lift(error_buf)
     }
 }
 
-public object FfiConverterTypeOreHqMobileFfiError : FfiConverterRustBuffer<OreHqMobileFfiException> {
-    override fun read(buf: ByteBuffer): OreHqMobileFfiException {
+public object FfiConverterTypeCoalPoolMobileFfiError : FfiConverterRustBuffer<CoalPoolMobileFfiException> {
+    override fun read(buf: ByteBuffer): CoalPoolMobileFfiException {
         
             return when(buf.getInt()) {
-            1 -> OreHqMobileFfiException.InvalidPubkeyStr(FfiConverterString.read(buf))
+            1 -> CoalPoolMobileFfiException.InvalidPubkeyStr(FfiConverterString.read(buf))
             else -> throw RuntimeException("invalid error enum value, something is very wrong!!")
         }
         
     }
 
-    override fun allocationSize(value: OreHqMobileFfiException): ULong {
+    override fun allocationSize(value: CoalPoolMobileFfiException): ULong {
         return 4UL
     }
 
-    override fun write(value: OreHqMobileFfiException, buf: ByteBuffer) {
+    override fun write(value: CoalPoolMobileFfiException, buf: ByteBuffer) {
         when(value) {
-            is OreHqMobileFfiException.InvalidPubkeyStr -> {
+            is CoalPoolMobileFfiException.InvalidPubkeyStr -> {
                 buf.putInt(1)
                 Unit
             }
@@ -1162,7 +1162,7 @@ public object FfiConverterSequenceUByte: FfiConverterRustBuffer<List<kotlin.UByt
 } fun `dxHash`(`challenge`: List<kotlin.UByte>, `cutoff`: kotlin.ULong, `startNonce`: kotlin.ULong, `endNonce`: kotlin.ULong): DxSolution {
             return FfiConverterTypeDxSolution.lift(
     uniffiRustCall() { _status ->
-    UniffiLib.INSTANCE.uniffi_orehqmobileffi_fn_func_dx_hash(
+    UniffiLib.INSTANCE.uniffi_coalpoolmobileffi_fn_func_dx_hash(
         FfiConverterSequenceUByte.lower(`challenge`),FfiConverterULong.lower(`cutoff`),FfiConverterULong.lower(`startNonce`),FfiConverterULong.lower(`endNonce`),_status)
 }
     )
@@ -1171,17 +1171,17 @@ public object FfiConverterSequenceUByte: FfiConverterRustBuffer<List<kotlin.UByt
  fun `generateKey`(): GeneratedKey {
             return FfiConverterTypeGeneratedKey.lift(
     uniffiRustCall() { _status ->
-    UniffiLib.INSTANCE.uniffi_orehqmobileffi_fn_func_generate_key(
+    UniffiLib.INSTANCE.uniffi_coalpoolmobileffi_fn_func_generate_key(
         _status)
 }
     )
     }
     
 
-    @Throws(OreHqMobileFfiException::class) fun `getTransferLamportsTransaction`(`latestBlockhash`: kotlin.String, `fromPubkeyStr`: kotlin.String, `toPubkeyStr`: kotlin.String, `amount`: kotlin.ULong): kotlin.String {
+    @Throws(CoalPoolMobileFfiException::class) fun `getTransferLamportsTransaction`(`latestBlockhash`: kotlin.String, `fromPubkeyStr`: kotlin.String, `toPubkeyStr`: kotlin.String, `amount`: kotlin.ULong): kotlin.String {
             return FfiConverterString.lift(
-    uniffiRustCallWithError(OreHqMobileFfiException) { _status ->
-    UniffiLib.INSTANCE.uniffi_orehqmobileffi_fn_func_get_transfer_lamports_transaction(
+    uniffiRustCallWithError(CoalPoolMobileFfiException) { _status ->
+    UniffiLib.INSTANCE.uniffi_coalpoolmobileffi_fn_func_get_transfer_lamports_transaction(
         FfiConverterString.lower(`latestBlockhash`),FfiConverterString.lower(`fromPubkeyStr`),FfiConverterString.lower(`toPubkeyStr`),FfiConverterULong.lower(`amount`),_status)
 }
     )

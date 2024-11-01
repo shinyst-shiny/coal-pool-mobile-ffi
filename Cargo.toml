@@ -1,10 +1,10 @@
 [package]
-name = "ore-hq-mobile-ffi"
+name = "coal-pool-mobile-ffi"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "orehqmobileffi"
+name = "coalpoolmobileffi"
 crate-type = ["cdylib"]
 
 [[bin]]

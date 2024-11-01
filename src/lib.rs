@@ -5,7 +5,7 @@ use bip39::{Mnemonic, Seed};
 use serde::{Serialize, Deserialize};
 use solana_sdk::{derivation_path::DerivationPath, signature::Keypair, signer::SeedDerivable, system_instruction, pubkey::Pubkey, transaction::Transaction};
 
-uniffi::include_scaffolding!("orehqmobileffi");
+uniffi::include_scaffolding!("coalpoolmobileffi");
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct DxSolution {
@@ -16,7 +16,7 @@ pub struct DxSolution {
 }
 
 #[derive(Debug, thiserror::Error)]
-pub enum OreHqMobileFfiError {
+pub enum CoalPoolMobileFfiError {
     #[error("Failed to parse pubkey_str {pubkey_str}")]
     InvalidPubkeyStr { pubkey_str: String },
 }
@@ -103,7 +103,7 @@ pub fn generate_key() -> GeneratedKey {
     }
 }
 
-pub fn get_transfer_lamports_transaction(latest_blockhash_str: String, from_pubkey_str: String, to_pubkey_str: String, amount: u64) -> Result<String, OreHqMobileFfiError> {
+pub fn get_transfer_lamports_transaction(latest_blockhash_str: String, from_pubkey_str: String, to_pubkey_str: String, amount: u64) -> Result<String, CoalPoolMobileFfiError> {
     let decoded_blockhash = BASE64_STANDARD.decode(latest_blockhash_str).unwrap();
     let deserialized_blockhash = bincode::deserialize(&decoded_blockhash).unwrap();
 
@@ -125,12 +125,12 @@ pub fn get_transfer_lamports_transaction(latest_blockhash_str: String, from_pubk
                     Ok(encoded_tx)
                 },
                 Err(_e) => {
-                    return Err(OreHqMobileFfiError::InvalidPubkeyStr { pubkey_str: to_pubkey_str })
+                    return Err(CoalPoolMobileFfiError::InvalidPubkeyStr { pubkey_str: to_pubkey_str })
                 }
             }
         },
         Err(_e) => {
-            return Err(OreHqMobileFfiError::InvalidPubkeyStr { pubkey_str: from_pubkey_str })
+            return Err(CoalPoolMobileFfiError::InvalidPubkeyStr { pubkey_str: from_pubkey_str })
         }
     }
 
