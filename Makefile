@@ -8,14 +8,23 @@ JNI_LIBS_DIR = jniLibs
 LIB_NAME = libuniffi_coalpoolmobileffi.so
 
 # Default target to run
-all: build copy-libs generate-kotlin
+all: build-x86_64 build-i686 build-armv7 build-aarch64 copy-libs generate-kotlin
 
 # Build the project with the given targets
-build:
-	cargo build --lib --release \
-	    --target x86_64-linux-android \
-	    --target i686-linux-android \
-	    --target armv7-linux-androideabi \
+build-x86_64:
+	CROSS_BUILD_OPTS="--output=type=docker" cross build --lib --release \
+	    --target x86_64-linux-android
+
+build-i686:
+	CROSS_BUILD_OPTS="--output=type=docker" cross build --lib --release \
+	    --target i686-linux-android
+
+build-armv7:
+	CROSS_BUILD_OPTS="--output=type=docker" cross build --lib --release \
+	    --target armv7-linux-androideabi
+
+build-aarch64:
+	CROSS_BUILD_OPTS="--output=type=docker" cross build --lib --release \
 	    --target aarch64-linux-android
 
 # Copy .so files to appropriate directories

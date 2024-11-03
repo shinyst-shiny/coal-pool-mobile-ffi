@@ -35,6 +35,9 @@ import java.util.concurrent.ConcurrentHashMap
 // A rust-owned buffer is represented by its capacity, its current length, and a
 // pointer to the underlying data.
 
+/**
+ * @suppress
+ */
 @Structure.FieldOrder("capacity", "len", "data")
 open class RustBuffer : Structure() {
     // Note: `capacity` and `len` are actually `ULong` values, but JVM only supports signed values.
@@ -87,6 +90,8 @@ open class RustBuffer : Structure() {
  * Required for callbacks taking in an out pointer.
  *
  * Size is the sum of all values in the struct.
+ *
+ * @suppress
  */
 class RustBufferByReference : ByReference(16) {
     /**
@@ -121,16 +126,20 @@ class RustBufferByReference : ByReference(16) {
 // completeness.
 
 @Structure.FieldOrder("len", "data")
-open class ForeignBytes : Structure() {
+internal open class ForeignBytes : Structure() {
     @JvmField var len: Int = 0
     @JvmField var data: Pointer? = null
 
     class ByValue : ForeignBytes(), Structure.ByValue
 }
-// The FfiConverter interface handles converter types to and from the FFI
-//
-// All implementing objects should be public to support external types.  When a
-// type is external we need to import it's FfiConverter.
+/**
+ * The FfiConverter interface handles converter types to and from the FFI
+ *
+ * All implementing objects should be public to support external types.  When a
+ * type is external we need to import it's FfiConverter.
+ *
+ * @suppress
+ */
 public interface FfiConverter<KotlinType, FfiType> {
     // Convert an FFI type to a Kotlin type
     fun lift(value: FfiType): KotlinType
@@ -193,7 +202,11 @@ public interface FfiConverter<KotlinType, FfiType> {
     }
 }
 
-// FfiConverter that uses `RustBuffer` as the FfiType
+/**
+ * FfiConverter that uses `RustBuffer` as the FfiType
+ *
+ * @suppress
+ */
 public interface FfiConverterRustBuffer<KotlinType>: FfiConverter<KotlinType, RustBuffer.ByValue> {
     override fun lift(value: RustBuffer.ByValue) = liftFromRustBuffer(value)
     override fun lower(value: KotlinType) = lowerIntoRustBuffer(value)
@@ -236,7 +249,11 @@ internal open class UniffiRustCallStatus : Structure() {
 
 class InternalException(message: String) : kotlin.Exception(message)
 
-// Each top-level error class has a companion object that can lift the error from the call status's rust buffer
+/**
+ * Each top-level error class has a companion object that can lift the error from the call status's rust buffer
+ *
+ * @suppress
+ */
 interface UniffiRustCallStatusErrorHandler<E> {
     fun lift(error_buf: RustBuffer.ByValue): E;
 }
@@ -273,7 +290,11 @@ private fun<E: kotlin.Exception> uniffiCheckCallStatus(errorHandler: UniffiRustC
     }
 }
 
-// UniffiRustCallStatusErrorHandler implementation for times when we don't expect a CALL_ERROR
+/**
+ * UniffiRustCallStatusErrorHandler implementation for times when we don't expect a CALL_ERROR
+ *
+ * @suppress
+ */
 object UniffiNullRustCallStatusErrorHandler: UniffiRustCallStatusErrorHandler<InternalException> {
     override fun lift(error_buf: RustBuffer.ByValue): InternalException {
         RustBuffer.free(error_buf)
@@ -711,19 +732,19 @@ internal interface UniffiLib : Library {
         
     }
 
-    fun uniffi_coalpoolmobileffi_fn_func_dx_hash(`challenge`: RustBuffer.ByValue,`cutoff`: Long,`startNonce`: Long,`endNonce`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun uniffi_coalpoolmobileffi_fn_func_dx_hash(`challenge`: RustBuffer.ByValue,`cutoff`: Long,`startNonce`: Long,`endNonce`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun uniffi_coalpoolmobileffi_fn_func_generate_key(uniffi_out_err: UniffiRustCallStatus,
+    fun uniffi_coalpoolmobileffi_fn_func_generate_key(uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun uniffi_coalpoolmobileffi_fn_func_get_transfer_lamports_transaction(`latestBlockhash`: RustBuffer.ByValue,`fromPubkeyStr`: RustBuffer.ByValue,`toPubkeyStr`: RustBuffer.ByValue,`amount`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun uniffi_coalpoolmobileffi_fn_func_get_transfer_lamports_transaction(`latestBlockhash`: RustBuffer.ByValue,`fromPubkeyStr`: RustBuffer.ByValue,`toPubkeyStr`: RustBuffer.ByValue,`amount`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun ffi_coalpoolmobileffi_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun ffi_coalpoolmobileffi_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
-    fun ffi_coalpoolmobileffi_rustbuffer_free(`buf`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rustbuffer_free(`buf`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
-    fun ffi_coalpoolmobileffi_rustbuffer_reserve(`buf`: RustBuffer.ByValue,`additional`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rustbuffer_reserve(`buf`: RustBuffer.ByValue,`additional`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun ffi_coalpoolmobileffi_rust_future_poll_u8(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -731,7 +752,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_u8(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_u8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_u8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun ffi_coalpoolmobileffi_rust_future_poll_i8(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -739,7 +760,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_i8(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_i8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_i8(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Byte
     fun ffi_coalpoolmobileffi_rust_future_poll_u16(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -747,7 +768,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_u16(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_u16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_u16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Short
     fun ffi_coalpoolmobileffi_rust_future_poll_i16(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -755,7 +776,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_i16(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_i16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_i16(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Short
     fun ffi_coalpoolmobileffi_rust_future_poll_u32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -763,7 +784,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_u32(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_u32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_u32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun ffi_coalpoolmobileffi_rust_future_poll_i32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -771,7 +792,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_i32(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_i32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_i32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
     fun ffi_coalpoolmobileffi_rust_future_poll_u64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -779,7 +800,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_u64(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_u64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_u64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Long
     fun ffi_coalpoolmobileffi_rust_future_poll_i64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -787,7 +808,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_i64(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_i64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_i64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Long
     fun ffi_coalpoolmobileffi_rust_future_poll_f32(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -795,7 +816,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_f32(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_f32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_f32(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Float
     fun ffi_coalpoolmobileffi_rust_future_poll_f64(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -803,7 +824,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_f64(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_f64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_f64(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Double
     fun ffi_coalpoolmobileffi_rust_future_poll_pointer(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -811,7 +832,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_pointer(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_pointer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_pointer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Pointer
     fun ffi_coalpoolmobileffi_rust_future_poll_rust_buffer(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -819,7 +840,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_rust_buffer(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_rust_buffer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_rust_buffer(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     fun ffi_coalpoolmobileffi_rust_future_poll_void(`handle`: Long,`callback`: UniffiRustFutureContinuationCallback,`callbackData`: Long,
     ): Unit
@@ -827,7 +848,7 @@ internal interface UniffiLib : Library {
     ): Unit
     fun ffi_coalpoolmobileffi_rust_future_free_void(`handle`: Long,
     ): Unit
-    fun ffi_coalpoolmobileffi_rust_future_complete_void(`handle`: Long,uniffi_out_err: UniffiRustCallStatus,
+    fun ffi_coalpoolmobileffi_rust_future_complete_void(`handle`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_coalpoolmobileffi_checksum_func_dx_hash(
     ): Short
@@ -852,13 +873,13 @@ private fun uniffiCheckContractApiVersion(lib: UniffiLib) {
 
 @Suppress("UNUSED_PARAMETER")
 private fun uniffiCheckApiChecksums(lib: UniffiLib) {
-    if (lib.uniffi_coalpoolmobileffi_checksum_func_dx_hash() != 18855.toShort()) {
+    if (lib.uniffi_coalpoolmobileffi_checksum_func_dx_hash() != 15087.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_coalpoolmobileffi_checksum_func_generate_key() != 44818.toShort()) {
+    if (lib.uniffi_coalpoolmobileffi_checksum_func_generate_key() != 59035.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
-    if (lib.uniffi_coalpoolmobileffi_checksum_func_get_transfer_lamports_transaction() != 2450.toShort()) {
+    if (lib.uniffi_coalpoolmobileffi_checksum_func_get_transfer_lamports_transaction() != 30038.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
 }
@@ -886,6 +907,9 @@ interface Disposable {
     }
 }
 
+/**
+ * @suppress
+ */
 inline fun <T : Disposable?, R> T.use(block: (T) -> R) =
     try {
         block(this)
@@ -898,9 +922,16 @@ inline fun <T : Disposable?, R> T.use(block: (T) -> R) =
         }
     }
 
-/** Used to instantiate an interface without an actual pointer, for fakes in tests, mostly. */
+/** 
+ * Used to instantiate an interface without an actual pointer, for fakes in tests, mostly.
+ *
+ * @suppress
+ * */
 object NoPointer
 
+/**
+ * @suppress
+ */
 public object FfiConverterUByte: FfiConverter<UByte, Byte> {
     override fun lift(value: Byte): UByte {
         return value.toUByte()
@@ -921,6 +952,9 @@ public object FfiConverterUByte: FfiConverter<UByte, Byte> {
     }
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterUInt: FfiConverter<UInt, Int> {
     override fun lift(value: Int): UInt {
         return value.toUInt()
@@ -941,6 +975,9 @@ public object FfiConverterUInt: FfiConverter<UInt, Int> {
     }
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterULong: FfiConverter<ULong, Long> {
     override fun lift(value: Long): ULong {
         return value.toULong()
@@ -961,6 +998,9 @@ public object FfiConverterULong: FfiConverter<ULong, Long> {
     }
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterString: FfiConverter<String, RustBuffer.ByValue> {
     // Note: we don't inherit from FfiConverterRustBuffer, because we use a
     // special encoding when lowering/lifting.  We can use `RustBuffer.len` to
@@ -1015,6 +1055,9 @@ public object FfiConverterString: FfiConverter<String, RustBuffer.ByValue> {
     }
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterByteArray: FfiConverterRustBuffer<ByteArray> {
     override fun read(buf: ByteBuffer): ByteArray {
         val len = buf.getInt()
@@ -1043,6 +1086,9 @@ data class DxSolution (
     companion object
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterTypeDxSolution: FfiConverterRustBuffer<DxSolution> {
     override fun read(buf: ByteBuffer): DxSolution {
         return DxSolution(
@@ -1078,6 +1124,9 @@ data class GeneratedKey (
     companion object
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterTypeGeneratedKey: FfiConverterRustBuffer<GeneratedKey> {
     override fun read(buf: ByteBuffer): GeneratedKey {
         return GeneratedKey(
@@ -1111,6 +1160,9 @@ sealed class CoalPoolMobileFfiException(message: String): kotlin.Exception(messa
     }
 }
 
+/**
+ * @suppress
+ */
 public object FfiConverterTypeCoalPoolMobileFfiError : FfiConverterRustBuffer<CoalPoolMobileFfiException> {
     override fun read(buf: ByteBuffer): CoalPoolMobileFfiException {
         
@@ -1139,6 +1191,9 @@ public object FfiConverterTypeCoalPoolMobileFfiError : FfiConverterRustBuffer<Co
 
 
 
+/**
+ * @suppress
+ */
 public object FfiConverterSequenceUByte: FfiConverterRustBuffer<List<kotlin.UByte>> {
     override fun read(buf: ByteBuffer): List<kotlin.UByte> {
         val len = buf.getInt()
